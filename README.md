@@ -1,13 +1,10 @@
 # Datahub-Factory-Pipelines
 
-This repository contains several example pipeline configurations for the
-[Datahub::Factory](https://github.com/thedatahub/Datahub-Factory) application.
-You could use them as a boilerplate to create your own pipelines
+This repository contains several example pipeline configurations for the [Datahub::Factory](https://github.com/thedatahub/Datahub-Factory) application. You could use them as a boilerplate to create your own pipelines
 
 ## Pipelines
 
-A pipeline is a connection between two system used to exchange records. A
-pipeline has three functions:
+A pipeline is a connection between two system used to exchange records. A pipeline has three functions:
 
 * Fetch data from a source
 * Transform the data. This entails manipulating the structure of the data as
@@ -16,45 +13,37 @@ well as the format in which the data will be delivered to a destination.
 
 ## Pipeline configuration
 
-The definition of a pipeline is contained in a configuration file. These
-configuration files are based on the [Config::Simple](http://search.cpan.org/~sherzodr/Config-Simple-4.59/Simple.pm) syntax. A configuration file roughly defines these three
-'plugin' types and their associated configuration in distinct blocks:
+The definition of a pipeline is contained in a configuration file. These configuration files are based on the [Config::Simple](http://search.cpan.org/~sherzodr/Config-Simple-4.59/Simple.pm) syntax. A configuration file roughly defines these three 'plugin' types and their associated configuration in distinct blocks:
 
 * Importer. Defines the source of the data and how to fetch it.
 * Fixer. Defines the [Catmandu::Fix](http://search.cpan.org/~nics/Catmandu-1.0507/lib/Catmandu/Fix.pm) logic that will transform the data
 * Exporter. Defines how the destination for the data and how it can be accessed it.
 
-Note that each plugin instance needs to be referenced explicitely in a global
-plugin block. Each instance gets it's own dedicated plugin definition.
+Note that each plugin instance needs to be referenced explicitely in a global plugin block. Each instance gets it's own dedicated plugin definition.
 
 A very minimal configuration would look like this:
 
 ```
-[Importer]
-plugin = OAI
+[General]
+id_path = 'id'
 
-[plugin_importer_OAI]
-endpoint = https://example/oai
-metadata_prefix = oai_lido
-handler = My::Handler
+[Importer]
+plugin = JSON
+
+[plugin_importer_JSON]
+file_name = './data/bar.json'
 
 [Fixer]
 plugin = Fix
 
 [plugin_fixer_Fix]
-file_name = '/Users/matthiasvandermaesen/Workspace/Datahub-Fixes/msk_oai_adlib.fix'
-id_path = 'lidoRecID.0._'
+file_name = './fixes/empty.fix'
 
 [Exporter]
-plugin = Datahub
+plugin = YAML
 
-[plugin_exporter_Datahub]
-datahub_url = http://datahub.box
-datahub_format = LIDO
-oauth_client_id = slightlylesssecretpublicid
-oauth_client_secret = supersecretsecretphrase
-oauth_username = admin
-oauth_password = datahub
+[plugin_exporter_YAML]
+
 ```
 
 ## Conditions
@@ -73,14 +62,13 @@ plugin = Fix
 [plugin_fixer_Fix]
 condition = "_metadata.institution\\.name.value"
 fixers = Foo, Bar
-id_path = 'lidoRecID.0._'
 
 [plugin_fixer_Foo]
-condition = 'Museum of Foo'
+condition_path = 'Museum of Foo'
 file_name = '/home/foobar/fixes/foo.fix'
 
 [plugin_fixer_Bar]
-condition = 'Museum of Bar'
+condition_path = 'Museum of Bar'
 file_name = '/home/foobar/fixes/bar.fix'
 ```
 
@@ -91,12 +79,12 @@ such, pipeline configurations are based on Catmandu concepts and terminology.
 
 ## Authors
 
-Pieter De Praetere <pieter@packed.be>
-Matthias Vandermaesen <matthias.vandermaesen@vlaamsekunstcollectie.be>
+* Pieter De Praetere <pieter@packed.be>
+* Matthias Vandermaesen <matthias.vandermaesen@vlaamsekunstcollectie.be>
 
 ## Copyright
 
-Copyright 2016 - PACKED vzw, Vlaamse Kunstcollectie vzw
+Copyright 2016, 2019 - PACKED vzw, Vlaamse Kunstcollectie vzw
 
 ## License
 

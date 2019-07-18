@@ -1,0 +1,13 @@
+---
+author:
+- Lorem S. Ipsum
+id: foo:12334568
+lang: lat
+subject:
+- lorem ipsum
+subtype: painting
+summary:
+- Lorem ipsum dolor sit amet.
+title: foo bar
+year: 1899
+...

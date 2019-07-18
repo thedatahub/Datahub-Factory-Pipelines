@@ -1,0 +1,16 @@
+[{
+	"title": "foo bar",
+    "subject": [
+      "lorem ipsum"
+    ],
+    "id": "foo:12334568",
+    "lang": "lat",
+    "subtype": "painting",
+    "year": 1899,
+    "author": [
+    	"Lorem S. Ipsum"
+    ],
+    "summary": [
+    	"Lorem ipsum dolor sit amet."
+    ]
+}]
